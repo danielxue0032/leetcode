@@ -16,23 +16,27 @@
 var isValid = function(s) {
   if (!s) return true;
 
-  let stack = []
+  const stack = []
   const map = {
     '}': '{',
     ')': '(',
     ']': '[',
   }
+  const left = ['(', '{', '[']
+
   for(let i = 0; i < s.length; i++) {
     const char = s[i];
-    if (char === '(' || char === '[' || char === '{') {
+    if (left.includes(char)) {
       stack.push(char)
       continue
     }
     
-    if (map[char] && stack.pop() !== map[char]) {
+    if (stack.pop() !== map[char]) {
       return false;
     }
   }
+
+  // 判断是必要的，比如1个字符时
   return stack.length === 0;
 
 };
